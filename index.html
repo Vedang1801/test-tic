@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+<head>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <meta name="viewport" content="user-scalable=0">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <link rel="stylesheet" href="style.css">
+    <script>
+        const linkElement = document.createElement('link');
+        linkElement.rel = 'stylesheet';
+        linkElement.type = 'text/css';
+        const timestamp = new Date().getTime();
+        const updatedCssUrl = `color.css?t=${timestamp}`;
+        linkElement.href = updatedCssUrl;
+        document.head.appendChild(linkElement);
+    </script>
+    <script>
+        function openPopup() {
+            document.getElementById('popupModal').style.display = 'block';
+        }
+    
+        function closePopup() {
+            document.getElementById('popupModal').style.display = 'none';
+        }
+    </script>
+</head>
+<body style="margin: 0; padding-top: 20px;">
+    <div class="container">
+        <div class="square">            <div class="square-text" id="pass_month_year">
+                <span>One Way</span><br><br>
+                <span>3 Adults</span>
+            </div>
+        </div>
+        <div class="qr-square">
+            <a href="#" onclick="openPopup(); return false;">
+                <img class="qr-code" src="your-qr-code-image.png" alt="QR Code">
+            </a>
+            <div class="tap-to-enlarge">Tap to enlarge</div>
+        </div>
+    </div>
+    <div class="bip">BUS INTERSTATE PASS</div>    <div class="rectangle">
+        <div class="rectangle-text1" onclick="updateZoneText()">1</div>
+        <div class="rectangle-text2">ZONES</div>
+    </div>
+    <div class="bottom-container">
+        <div class="datetime" id="datetime"></div>
+        <div class="color-strip">
+            <div class="color-block red"></div>
+            <div class="color-block green"></div>
+            <div class="color-block blue"></div>
+        </div>
+        <div class="expires-text" ondblclick="resetCountdown()">Expires in <span id="countdown"></span></div>
+        <img class="bottom-image" src="bottom.png" alt="Bottom Image">
+        
+        <div id="popupModal" style="position: fixed;top: 19%;left: 52%;transform: translate(-50%, -50%);width: 100%;background-color: rgb(255, 255, 255);border: 2px solid rgb(204, 204, 204);box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 10px;padding: 20px 20px 20px 487px;height: 142%;display: none;">
+                <img onclick="closePopup()" src="your-qr-code-image.png" alt="QR Code" style="width: 50%;object-fit: contain;padding-top: 130%;margin-bottom: 65px;">
+                <a class="back-font">Tap to go back</a>
+        </div>
+    </div>    <script>        function updateMonthAndYear() {
+            document.getElementById("pass_month_year").innerHTML =
+                '<span style="font-size:45px;font-weight:700;">One Way</span><br><br>' +
+                '<span style="font-size:55px;font-weight:700;">3 Adults</span>';
+        }        // Store the end time as a global variable so we can access it across function calls
+        let countdownEndTime;          function resetCountdown() {
+            // Set countdown to 30 minutes from now
+            const now = new Date();
+            countdownEndTime = new Date(now.getTime() + 30 * 60 * 1000); // 30 minutes in milliseconds
+            updateCountdown();
+        }
+        
+        function updateCountdown() {
+            const countdown = document.getElementById('countdown');
+            
+            // If countdownEndTime isn't set yet, initialize it
+            if (!countdownEndTime) {
+                resetCountdown();
+                return;
+            }
+            
+            const currentTime = new Date();
+            const timeRemaining = new Date(countdownEndTime - currentTime);
+            
+            // If time is up or negative, reset the countdown
+            if (timeRemaining <= 0) {
+                resetCountdown();
+                return;
+            }
+            
+            const hours = timeRemaining.getUTCHours();
+            const minutes = timeRemaining.getUTCMinutes();
+            const seconds = timeRemaining.getUTCSeconds();
+            
+            countdown.textContent = `00:${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function updateDateTime() {
+            const datetime = document.getElementById('datetime');
+            const currentDate = new Date();
+            const options = {
+                weekday: 'short',
+                month: 'short',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            };
+            const dateTimeString = currentDate.toLocaleString('en-US', options);
+            datetime.textContent = dateTimeString.replace(" at", " ");
+        }        function updateZoneText() {
+            const zoneElement = document.querySelector('.rectangle-text1');
+            const zoneTextElement = document.querySelector('.rectangle-text2');
+            let currentZone = parseInt(zoneElement.textContent, 10);
+            currentZone = currentZone === 8 ? 1 : currentZone + 1;
+            zoneElement.textContent = currentZone;
+            
+            // Update ZONE/ZONES text based on current zone number
+            if (currentZone === 1) {
+                zoneTextElement.textContent = "ZONE";
+            } else {
+                zoneTextElement.textContent = "ZONES";
+            }
+        }
+        updateMonthAndYear();
+        updateCountdown();
+        updateDateTime();
+        setInterval(updateCountdown, 1000);
+        setInterval(updateDateTime, 1000);
+    </script>
+
+</body>
+
+<!-- Mirrored from dummytummy123.github.io/ticketsystem/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 09 Jan 2025 16:05:01 GMT -->
+</html>
