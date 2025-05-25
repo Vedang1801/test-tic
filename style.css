@@ -215,11 +215,12 @@ body {
 .bip {
     margin-top: -10px;
     margin-bottom: 8px;
-    font-weight: 700;
+    font-weight: 500;
     color: #000000;
-    font-size: 65px;
+    font-size: 80px;
     width: 100%;
     text-align: center;
+    font-family: 'SF Pro Display Medium', sans-serif;
 }
 
 .not-valid {
