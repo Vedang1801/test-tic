@@ -32,7 +32,7 @@
     <div class="container">
         <div class="square">            <div class="square-text" id="pass_month_year">
                 <span>One Way</span><br><br>
-                <span>3 Adult</span>
+                <span>3 Adults</span>
             </div>
         </div>
         <div class="qr-square">
@@ -40,8 +40,7 @@
                 <img class="qr-code" src="your-qr-code-image.png" alt="QR Code">
             </a>
             <div class="tap-to-enlarge">Tap to enlarge</div>
-        </div>
-    </div>    <div class="bip">INTRASTATE</div>    <div class="rectangle">
+        </div>    </div>    <div class="bip" id="stateType" onclick="toggleStateType()">INTRASTATE</div>    <div class="rectangle">
         <div class="rectangle-text1" onclick="updateZoneText()">1</div>
         <div class="rectangle-text2">ZONE RIDE</div>
         <div class="not-valid">**Not Valid for HBLR**</div>
@@ -62,7 +61,7 @@
                 <a class="back-font">Tap to go back</a>
         </div>
     </div>    <script>        function updateMonthAndYear() {            document.getElementById("pass_month_year").innerHTML =                '<span style="font-size:45px;font-weight:900;font-family:\'SF Pro Display\'; display:block; margin-top:10px;">One Way</span><br>' +
-                '<span style="font-size:55px;font-weight:900;font-family:\'SF Pro Display\';">3 Adult</span>';
+                '<span style="font-size:55px;font-weight:900;font-family:\'SF Pro Display\';">3 Adults</span>';
         }// Store the end time as a global variable so we can access it across function calls
         let countdownEndTime;          function resetCountdown() {
             // Set countdown to 30 minutes from now
@@ -128,9 +127,21 @@
             if (currentZone === 1) {
                 zoneTextElement.textContent = "ZONE RIDE";
             } else {
-                zoneTextElement.textContent = "ZONE RIDE";
+                zoneTextElement.textContent = "ZONES RIDE";
             }
         }
+
+        function toggleStateType() {
+            const stateElement = document.getElementById('stateType');
+            if (stateElement.textContent === "INTRASTATE") {
+                stateElement.textContent = "INTERSTATE";
+                stateElement.style.color = "red";
+            } else {
+                stateElement.textContent = "INTRASTATE";
+                stateElement.style.color = "";  // Reset to default color
+            }
+        }
+        
         updateMonthAndYear();
         updateCountdown();
         updateDateTime();
