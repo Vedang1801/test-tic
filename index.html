@@ -41,11 +41,12 @@
             </a>
             <div class="tap-to-enlarge">Tap to enlarge</div>
         </div>
-    </div>
-    <div class="bip">BUS INTERSTATE PASS</div>    <div class="rectangle">
+    </div>    <div class="bip">INTRASTATE</div>    <div class="rectangle">
         <div class="rectangle-text1" onclick="updateZoneText()">1</div>
-        <div class="rectangle-text2">ZONE</div>
+        <div class="rectangle-text2">ZONE RIDE</div>
+        <div class="not-valid">**Not Valid for HBLR**</div>
     </div>
+    <div class="validator-instructions">View Validator Instructions</div>
     <div class="bottom-container">
         <div class="datetime" id="datetime"></div>
         <div class="color-strip">
@@ -60,8 +61,7 @@
                 <img onclick="closePopup()" src="your-qr-code-image.png" alt="QR Code" style="width: 50%;object-fit: contain;padding-top: 130%;margin-bottom: 65px;">
                 <a class="back-font">Tap to go back</a>
         </div>
-    </div>    <script>        function updateMonthAndYear() {            document.getElementById("pass_month_year").innerHTML =
-                '<span style="font-size:45px;font-weight:900;font-family:\'SF Pro Display\';">One Way</span><br><br>' +
+    </div>    <script>        function updateMonthAndYear() {            document.getElementById("pass_month_year").innerHTML =                '<span style="font-size:45px;font-weight:900;font-family:\'SF Pro Display\'; display:block; margin-top:10px;">One Way</span><br>' +
                 '<span style="font-size:55px;font-weight:900;font-family:\'SF Pro Display\';">3 Adults</span>';
         }// Store the end time as a global variable so we can access it across function calls
         let countdownEndTime;          function resetCountdown() {
@@ -94,22 +94,30 @@
             const seconds = timeRemaining.getUTCSeconds();
             
             countdown.textContent = `00:${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-        }
-
-        function updateDateTime() {
+        }        function updateDateTime() {
             const datetime = document.getElementById('datetime');
             const currentDate = new Date();
+            
+            // Format time as HH:MM:SS AM/PM
+            const hours = currentDate.getHours();
+            const minutes = currentDate.getMinutes();
+            const seconds = currentDate.getSeconds();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            const formattedHours = hours % 12 || 12;
+            const timeString = `${formattedHours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')} ${ampm}`;
+            
+            // Format date as Day of week, Month Day, Year
             const options = {
-                weekday: 'short',
-                month: 'short',
-                day: '2-digit',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit'
+                weekday: 'long',
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric'
             };
-            const dateTimeString = currentDate.toLocaleString('en-US', options);
-            datetime.textContent = dateTimeString.replace(" at", " ");
-        }        function updateZoneText() {
+            const dateString = currentDate.toLocaleDateString('en-US', options);
+            
+            // Set the datetime content with proper formatting
+            datetime.innerHTML = `${timeString}<br>${dateString}`;
+        }function updateZoneText() {
             const zoneElement = document.querySelector('.rectangle-text1');
             const zoneTextElement = document.querySelector('.rectangle-text2');
             let currentZone = parseInt(zoneElement.textContent, 10);
