@@ -125,19 +125,19 @@ body {
     text-align: center;
     font-weight: 500;
     align-items: center;
-    padding-bottom: 5px;
+    padding-bottom: 0px;
 }
 
 .rectangle-text1 {
-    font-size: 190px;
+    font-size: 185px;
     margin-bottom: -30px;
-    margin-top: -15px;
+    margin-top: -10px;
     width: 200px;
 }
 
 .rectangle-text2 {
-    font-size: 60px;
-    margin-bottom: 0px;
+    font-size: 70px;
+    margin-bottom: 2px;
 }
 
 .bottom-container {
@@ -227,6 +227,7 @@ body {
     font-size: 20px;
     text-align: center;
     margin-top: 0px;
+    margin-bottom: 8px;
     font-weight: 500;
 }
 
