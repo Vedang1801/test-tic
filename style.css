@@ -292,7 +292,7 @@ body {
     margin-top: 10px;
     margin-bottom: 20px;
     font-weight: 300; 
-    letter-spacing: 0.08em; /* Slightly increase letter spacing */
+    letter-spacing: 0.05em; /* Slightly increase letter spacing */
 }
 a.back-font {
     font-size: 35px;
